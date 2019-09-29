@@ -3,5 +3,6 @@ __pycache__
 .DS_Store
 agent.pickle
 Folding Protein - v3.ipynb
-Reports/Protein Folding Problem - A Reinforcement Learning Approach.pages
+report/Protein Folding Problem - A Reinforcement Learning Approach.pages
+report/.DS_Store
 Untitled.ipynb
