@@ -4,7 +4,7 @@
 
 The following is an AI project that aims to solve a simplified version of the Protein Folding Problem using Reinforcement Learning. The Protein Folding Problem is concerned with finding the *Native State* of a protein given its sequence of amino-acids. When a protein is synthesized, it folds rapidly in the space until it reaches a stable form, usually referred to as the Native State. After this, the protein can occupy its intended function. 
 
-Knowing the outcome of the folding process in advance is one of the major challenges in Bioinformatics, and solving would have important implications in several domains ranging form biochemistry to genetic engineering.
+Knowing the outcome of the folding process in advance is one of the major challenges in Bioinformatics, and solving it would have important implications in several domains ranging form biochemistry to genetic engineering.
 
 ## Research Questions
 
