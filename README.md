@@ -6,6 +6,8 @@ The following is an AI project that aims to solve a simplified version of the Pr
 
 Knowing the outcome of the folding process in advance is one of the major challenges in Bioinformatics, and solving it would have important implications in several domains ranging form biochemistry to genetic engineering.
 
+For a more detailed description of the problem, the task formulation and the proposed solution, check out the [paper](report/Protein Folding Problem - A Reinforcement Learning Approach.pdf) !
+
 ## Research Questions
 
 Through this project, we will try to answer the following questions :
