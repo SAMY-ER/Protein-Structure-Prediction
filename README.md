@@ -6,7 +6,7 @@ The following is an AI project that aims to solve a simplified version of the Pr
 
 Knowing the outcome of the folding process in advance is one of the major challenges in Bioinformatics, and solving it would have important implications in several domains ranging form biochemistry to genetic engineering.
 
-For a more detailed description of the problem, the task formulation and the proposed solution, check out the [paper](https://github.com/SAMY-ER/Protein-Folding-Problem/blob/master/report/Protein%20Folding%20Problem%20-%20A%20Reinforcement%20Learning%20Approach.pdf) !
+For a more detailed description of the problem, the task formulation and the proposed solution, check out the accompanying [paper](https://github.com/SAMY-ER/Protein-Folding-Problem/blob/master/report/Protein%20Folding%20Problem%20-%20A%20Reinforcement%20Learning%20Approach.pdf) !
 
 ## Research Questions
 
@@ -16,7 +16,14 @@ Through this project, we will try to answer the following questions :
 * How do we frame the task from a Reinforcement Learning perspective ? What is the State Space, Action Space and Reward Function ?
 * How viable is Reinforcement Learning in solving the Protein Folding Problem ?
 
-##  Setup
+##  Installation
+
+
+## Components
+
+This
+
+### Environment
 
 
 ## Preview

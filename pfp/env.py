@@ -36,30 +36,33 @@ class ProteinFoldingEnv(gym.Env):
 
         # Agent Variables
         self.state = [(0,0), (0,1)] # Initial state is [(0,0), (0,1)] in order to force an initial direction and reduce state space by factor 1/3
-        self.actions = [] # list of ordered actions taken during an episode
-        self.is_collision = False # Check presence of collision to end an episode
-        self.reward = 0 # counts reward during an episode
+        self.state_nn = np.zeros(self.size - 2) - 1 # Initial state_nn is [-1, -1, ..., -1] 
+        self.actions = [] # List of ordered actions taken during an episode
+        self.is_collision = False # Checks presence of collision
+        self.reward = 0 # Counts reward during an episode
         
         # Action Space & Observation Space
-        self.action_space = gym.spaces.Discrete(3) # action space of size 3
+        self.action_space = gym.spaces.Discrete(3) # Action space of size 3
         self.loc = (0,1) # Last Position on the chain. Initial value is (0,1) (from initial state [(0,0), (0,1)])
         self.direction = 1 # Initial direction is 'Forward'
-        self.iter = 0 # counts number of iterations or steps in the episode
+        self.iter = 0 # Counts number of iterations or steps in the episode
 
         
-    def reset(self):
+    def reset(self, state_nn=False):
         """Reset Environment to initial values."""
         self.state = [(0,0), (0,1)]
+        self.state_nn = np.zeros(self.size - 2) - 1
         self.actions = []
         self.reward = 0
         self.is_collision = False
         self.loc = (0,1)
         self.direction = 1
         self.iter = 0
+        if state_nn: return copy.copy(self.state_nn)
         return copy.copy(self.state)
 
         
-    def step(self, action):
+    def step(self, action, state_nn=False):
         """Advance the agent to the next state using the input action."""
         # Get Next Location
         self.loc, self.direction = self._get_next_loc(self.loc, self.direction, action)  
@@ -67,9 +70,10 @@ class ProteinFoldingEnv(gym.Env):
         if self.loc in self.state:
             self.is_collision = True
         # Update
-        self.iter += 1
         self.state.append(self.loc)
-        self.actions.append(action)            
+        self.state_nn[self.iter] = action
+        self.actions.append(action)
+        self.iter += 1
         # Set Done Parameter
         done = True if (self.iter+2 == self.size) or self.is_collision else False  
         # Compute Reward of (state, action) pair
@@ -80,10 +84,10 @@ class ProteinFoldingEnv(gym.Env):
             'chain_length' : self.iter + 2,
             'seq_length'   : self.size,
             'is_collision' : self.is_collision,
-            'actions'      : [self.ACTION_TO_STR[i] for i in self.actions],
-            'state'  : self.state
+            #'actions'      : [self.ACTION_TO_STR[i] for i in self.actions],
+            #'state'        : self.state
         }
-        
+        if state_nn: return (copy.copy(self.state_nn), reward, done, info)
         return (copy.copy(self.state), reward, done, info)
 
     
@@ -119,8 +123,8 @@ class ProteinFoldingEnv(gym.Env):
     def _compute_energy(self):
         """Compute energy at the end of episode."""
         E = 0
-        for i in range(self.size-2):
-            for j in range(i+2, self.size):
+        for i in range(self.iter + 2 - 2):
+            for j in range(i + 2, self.iter + 2):
                 if (self.sequence[i] == 'H') and (self.sequence[j] == 'H') and self._is_neighbors(self.state[i], self.state[j]):
                     E -= 1
         return E
@@ -178,8 +182,8 @@ class ProteinFoldingEnv(gym.Env):
         ax.plot(T_x, T_y, '.--', color='white', linewidth=.6)
         ax.scatter(H_x, H_y, s=400, facecolor='tab:red', label='H')
         ax.scatter(P_x, P_y, s=400, facecolor='tab:blue', label='P')
-        ax.annotate(s='Start', xy=(0,0), xytext=(.1, -.35), color='white', weight='bold')
-        ax.annotate(s='End', xy=self.loc, xytext=(self.loc[0]+.1, self.loc[1]-.35), color='white', weight='bold')
+        ax.annotate(s='Start', xy=(0,0), xytext=(0.1, -0.35), color='white', weight='bold')
+        ax.annotate(s='End', xy=self.loc, xytext=(self.loc[0]+0.1, self.loc[1]-0.35), color='white', weight='bold')
         plt.xlim(min(T_x)-1, max(T_x)+1)
         plt.ylim(min(T_y)-1, max(T_y)+1)
         ax.legend(markerscale=.5)
