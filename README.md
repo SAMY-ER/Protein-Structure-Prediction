@@ -18,10 +18,9 @@ Through this project, we will try to answer the following questions :
 
 ##  Installation
 
+![Alt text](https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg)
+<img src="https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg">
 
-<p align='center'>
-<img src='https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg' width='600' alt='npm start'>
-</p>
 
 
 ## Components
