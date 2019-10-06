@@ -18,20 +18,49 @@ Through this project, we will try to answer the following questions :
 
 ##  Installation
 
+In order to install and run this module, complete the following steps. 
 
-![Example](./docs/animated.svg)
+1. Create a virtual environment (this step is optional):
+    **Using virtualenv**
+```
+>> mkdir ~/envs
+>> python -m venv ~/envs/pfpenv
+>> source ~/envs/pfpenv/bin/activate
+```
+    **Using conda envs**
+```
+>> conda create --name pfpenv
+>> conda activate pfpenv
+```
 
+2. Install requirements:
+```
+>> cd path/to/Protein-Folding-Problem
+>> pip install -r requirements.txt
+```
 
+3. Run setup.py:
+```
+>> pip install .
+```
+
+## Usage
+
+![Example](./docs/animated.svg) <!-- .element height="30%" width="40%" -->
 
 ## Components
 
-This
+This section describes the different components of the module : 
+    1. The environment
+    2. The agents
 
 ### Environment
+
+### Agents
 
 
 ## Preview
 
-![alt text](report/figures/predicted_native_state.png "Predicted Native State - sequence : PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP")
+![alt text](./report/figures/predicted_native_state.png "Predicted Native State - sequence : PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP")
 
-![alt text](report/figures/env_summary.png "Environment Summary")
+![alt text](./report/figures/env_summary.png "Environment Summary")
