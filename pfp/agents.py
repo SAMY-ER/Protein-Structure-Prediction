@@ -101,8 +101,7 @@ class DQNAgent:
         self.batch_size = batch_size                       # Batch size
         # Models
         self.policy_network = self._build_model()
-
-        
+  
     def _build_model(self):
         """Builds architecture of neural network."""
         model = Sequential()
@@ -111,12 +110,10 @@ class DQNAgent:
         model.add(Dense(self.nb_actions, activation='linear'))
         model.compile(loss=Huber(), optimizer=Adam(lr=self.learning_rate))
         return model
-
         
     def remember(self, state, action, next_state, reward, done):
         """Stores memory of experienced events."""
         self.memory.push(state, action, next_state, reward, done)
-
         
     def act(self, state, policy='egreedy'):
         """Method to select an action according to a policy."""
@@ -128,7 +125,6 @@ class DQNAgent:
         else : # greedy policy
             action = np.argmax(self.policy_network.predict(state.reshape(1,-1)).squeeze(0))
         return action
-
     
     def train(self):
         """Trains the policy neural network using transitions randomly sampled from memory."""
@@ -144,18 +140,31 @@ class DQNAgent:
         history = self.policy_network.fit(input_batch, target_batch, batch_size=self.batch_size, epochs=1, verbose=0)
         return history.history
 
+    def save(self, fname='../models/model.pkl'):
+        """Method to save a DQN agent."""
+        with open(fname, 'wb') as output:
+            pickle.dump(self, output, pickle.HIGHEST_PROTOCOL)
+        return None
+
+    @staticmethod
+    def load(fname):
+        """Method to load a DQN agent."""
+        with open(fname, 'rb') as f:
+            agent = pickle.load(f)           
+        return agent
+
 
 # ===================================================== #
 # CLASS DEFINITION : DOUBLE DEEP Q-NETWORK (DDQN) AGENT #
 # ===================================================== #
 
 class DDQNAgent:
-    def __init__(self, input_dim, action_size, learning_rate = 0.001, batch_size = 64, target_update = 100, memory_capacity=10000, gamma = 0.95, epsilon = 1.0, epsilon_min = 0.05, epsilon_decay = 0.99997):
+    def __init__(self, input_dim, nb_actions, learning_rate = 0.001, batch_size = 64, target_update = 100, memory_capacity=10000, gamma = 0.95, epsilon = 1.0, epsilon_min = 0.05, epsilon_decay = 0.99997):
         """Initializes a Double Deep Q-Network (DDQN) Agent."""
         # Parameters
-        self.input_dim = input_dim
-        self.action_size = action_size
-        self.memory = Memory(capacity=memory_capacity)
+        self.input_dim = input_dim                          # Input dimension of the neural network
+        self.nb_actions = nb_actions                      # Number of possibble actions
+        self.memory = Memory(capacity=memory_capacity)      #
         self.gamma = gamma             
         self.epsilon = epsilon          
         self.epsilon_min = epsilon_min
@@ -167,27 +176,23 @@ class DDQNAgent:
         self.policy_network = self._build_model()
         self.target_network = self._build_model()
         self.update_target_network()
-
-        
+       
     def _build_model(self):
         """Builds architecture of neural network."""
         model = Sequential()
         model.add(Dense(16, input_dim=self.input_dim, activation='relu'))
         model.add(Dense(16, activation='relu'))
-        model.add(Dense(self.action_size, activation='linear'))
+        model.add(Dense(self.nb_actions, activation='linear'))
         model.compile(loss=Huber(), optimizer=Adam(lr=self.learning_rate))
         return model
-    
-    
+        
     def update_target_network(self):
         """Copy the weights from Model into Target_Model"""
         self.target_network.set_weights(self.policy_network.get_weights())
-
-        
+       
     def remember(self, state, action, next_state, reward, done):
         """Stores memory of experienced events."""
         self.memory.push(state, action, next_state, reward, done)
-
         
     def act(self, state, policy='egreedy'):
         """Method to select an action according to a policy."""
@@ -195,12 +200,11 @@ class DDQNAgent:
             if np.random.uniform(0, 1) > self.epsilon : # With probability (1-epsilon), take the best action (exploit, Greedy Policy)
                 action = np.argmax(self.policy_network.predict(state.reshape(1,-1)).squeeze(0))         
             else : # With probability epsilon, take random action (explore)
-                action = np.random.choice(self.action_size)
+                action = np.random.choice(self.nb_actions)
         else : # greedy policy
             action = np.argmax(self.policy_network.predict(state.reshape(1,-1)).squeeze(0))
         return action
-
-    
+   
     def train(self):
         """Trains the neural network using experiences randomly sampled from memory."""
         if len(self.memory) < self.batch_size:

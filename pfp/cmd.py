@@ -17,7 +17,8 @@ Options:
 """
 
 from docopt import docopt
-from pfp import ProteinFoldingEnv, QAgent, SEQUENCE_1, SEQUENCE_2, SEQUENCE_3, SEQUENCE_4, SEQUENCE_5, SEQUENCE_6
+import numpy as np
+from pfp import ProteinFoldingEnv, QAgent, DQNAgent, SEQUENCE_1, SEQUENCE_2, SEQUENCE_3, SEQUENCE_4, SEQUENCE_5, SEQUENCE_6
 
 
 # ================================= #
@@ -26,32 +27,61 @@ from pfp import ProteinFoldingEnv, QAgent, SEQUENCE_1, SEQUENCE_2, SEQUENCE_3, S
 
 def train_agent(agent, model_file, sequence=SEQUENCE_2, episodes=50000):
     # CREATE ENVIRONMENT
-    env = ProteinFoldingEnv(sequence, valid_state_reward = 0.1, collision_reward = -1) 
+    env = ProteinFoldingEnv(sequence, valid_state_reward = 0.1, collision_reward = 0) 
 
-    # CREATE AGENT
+   # GET STATE AND ACTION SPACE SIZE
     state_size = env.size - 2
-    action_size = env.action_space.n
-    agent = QAgent(state_size, action_size, epsilon_decay=0.999925, alpha=0.8)
+    nb_actions = env.action_space.n
 
-    # TRAIN AGENT
-    rewards = []
-    print('TRAINING STARTED ...')
-    for episode in range(1, episodes+1):
-        if episode % 10000 == 0 : print("  Episode :", episode)
-        state = env.reset()
-        done = False
-        while not done:
-            # Pick Next Action (via e-greedy policy)
-            action = agent.act(state, policy='egreedy') 
-            # Advance to next step
-            next_state, reward, done, info = env.step(action) 
+    if agent == 'dqn':
+        # CREATE AGENT
+        agent = DQNAgent(state_size, nb_actions, learning_rate=0.001, epsilon_decay=np.exp(np.log(0.05)/episodes))
+        # TRAIN AGENT
+        rewards = []
+        losses = []
+        print('TRAINING STARTED ...')
+        for episode in range(1, episodes+1):
+            state = env.reset(state_nn=True)
+            done = False
+            while not done:
+                # Pick Next Action (via e-greedy policy)
+                action = agent.act(state, policy='egreedy') 
+                # Advance to next step
+                next_state, reward, done, info = env.step(action, state_nn=True) 
+                 # Remember Experience
+                agent.remember(state, action, next_state, reward, done)
+                state = next_state
             # Update agent
-            agent.train(state, action, reward, next_state, done)
-            state = next_state
-        
-        if agent.epsilon >= agent.epsilon_min : agent.epsilon *= agent.epsilon_decay
-        rewards.append(env.reward)
-    print('TRAINING FINISHED!')
+            history = agent.train()
+            if episode % 100 == 0 : 
+                print('   Episode: {}/{} - Loss: {:.3f} - Reward: {:.2f} - Epsilon: {:.2f}.'.format(episode, episodes, history['loss'][0], env.reward, agent.epsilon))        
+            if agent.epsilon >= agent.epsilon_min : agent.epsilon *= agent.epsilon_decay
+            rewards.append(env.reward)
+            losses.append(history['loss'][0])
+        print('TRAINING FINISHED!')
+
+    else:
+        # CREATE AGENT
+        agent = QAgent(state_size, nb_actions, alpha=0.8, epsilon_decay=np.exp(np.log(0.05)/episodes))
+        # TRAIN AGENT
+        rewards = []
+        print('TRAINING STARTED ...')
+        for episode in range(1, episodes+1):
+            if episode % 10000 == 0 : print("  Episode :", episode)
+            state = env.reset(state_nn=state_nn)
+            done = False
+            while not done:
+                # Pick Next Action (via e-greedy policy)
+                action = agent.act(state, policy='egreedy', state_nn=state_nn) 
+                # Advance to next step
+                next_state, reward, done, info = env.step(action) 
+                # Update agent
+                agent.train(state, action, reward, next_state, done)
+                state = next_state
+            
+            if agent.epsilon >= agent.epsilon_min : agent.epsilon *= agent.epsilon_decay
+            rewards.append(env.reward)
+        print('TRAINING FINISHED!')
 
     # SAVE AGENT
     if model_file:
