@@ -49,7 +49,7 @@ Which creates the folder envs first, then the environment pfpenv and activates i
 
 ## IV. Usage
 
-<img src="./docs/animated.svg" width="80%" height="60%">
+<img src="./docs/psp_usage.svg" width="80%" height="60%">
 
 ## V. Components
 
