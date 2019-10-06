@@ -21,13 +21,13 @@ Through this project, we will try to answer the following questions :
 In order to install and run this module, complete the following steps. 
 
 1. Create a virtual environment (this step is optional):
-    **Using virtualenv**
+**Using virtualenv**
 ```
 >> mkdir ~/envs
 >> python -m venv ~/envs/pfpenv
 >> source ~/envs/pfpenv/bin/activate
 ```
-    **Using conda envs**
+**Using conda envs**
 ```
 >> conda create --name pfpenv
 >> conda activate pfpenv
@@ -46,7 +46,7 @@ In order to install and run this module, complete the following steps.
 
 ## Usage
 
-![Example](./docs/animated.svg) <!-- .element height="30%" width="40%" -->
+![Example](./docs/animated.svg =80x50) 
 
 ## Components
 
@@ -54,9 +54,9 @@ This section describes the different components of the module :
     1. The environment
     2. The agents
 
-### Environment
+### 1/ Environment
 
-### Agents
+### 2/ Agents
 
 
 ## Preview
