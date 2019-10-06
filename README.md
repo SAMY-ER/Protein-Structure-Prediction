@@ -48,7 +48,7 @@ In order to install and run this module, complete the following steps.
 ## Usage
 
 
-<img src="./docs/animated.svg" width="80" height="60">
+<img src="./docs/animated.svg" width="80%" height="60%">
 
 ## Components
 
