@@ -71,10 +71,9 @@ The file `pfp/env.py` implements this environment by extending the base environm
 
 <p align="center">
   <img width="40%" height="40%" src="./report/figures/predicted_native_state.png">
+  <img src="./report/figures/env_summary.png" width="80%" height="30%">
 </p>
 
-<div style="text-align:center"><img src="./report/figures/predicted_native_state.png" width="40%" height="40%"></div>
-<div style="text-align:center"><img src="./report/figures/env_summary.png" width="80%" height="30%"></div>
 
 ### 2. Agents
 
