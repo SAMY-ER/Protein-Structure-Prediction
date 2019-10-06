@@ -18,8 +18,8 @@ Through this project, we will try to answer the following questions :
 
 ##  Installation
 
-![Alt text](https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg?sanitize=true)
-<img src="https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg?sanitize=true">
+
+![Example](./docs/animated.svg)
 
 
 
