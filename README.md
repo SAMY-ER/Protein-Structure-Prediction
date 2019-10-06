@@ -21,6 +21,7 @@ Through this project, we will try to answer the following questions :
 In order to install and run this module, complete the following steps. 
 
 1. Create a virtual environment (this step is optional):
+
 **Using virtualenv**
 ```
 >> mkdir ~/envs
@@ -46,7 +47,8 @@ In order to install and run this module, complete the following steps.
 
 ## Usage
 
-![Example](./docs/animated.svg =80x50) 
+
+<img src="./docs/animated.svg" width="80" height="60">
 
 ## Components
 
