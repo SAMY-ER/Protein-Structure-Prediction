@@ -18,7 +18,9 @@ Through this project, we will try to answer the following questions :
 
 ##  Installation
 
-[![asciicast](https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg)](https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg)
+
+
+<a href="https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg"><img src="https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/animated.svg" width="836"/></a>
 
 
 ## Components
