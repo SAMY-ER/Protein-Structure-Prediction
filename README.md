@@ -1,6 +1,6 @@
 # Protein Structure Prediction : A Reinforcement Learning Approach
 
-## Description
+## I. Description
 
 The following is an AI project that aims to solve a simplified version of the Protein Structure Prediction (PSP) problem using Reinforcement Learning. The Protein Structure Prediction problem is concerned with finding the *Native State* of a protein given its sequence of amino-acids. When a protein is synthesized, it folds rapidly in the space until it reaches a stable form, usually referred to as the Native State. After this, the protein can occupy its intended function. 
 
@@ -8,7 +8,7 @@ Knowing the outcome of the folding process in advance is one of the major challe
 
 For a more detailed description of the problem, the task formulation and the proposed solution, check out the project's [paper](https://github.com/SAMY-ER/Protein-Folding-Problem/blob/master/report/Protein%20Folding%20Problem%20-%20A%20Reinforcement%20Learning%20Approach.pdf) !
 
-## Research Questions
+## II. Research Questions
 
 Through this project, we will try to answer the following questions :
 
@@ -16,7 +16,7 @@ Through this project, we will try to answer the following questions :
 * How do we frame the task from a Reinforcement Learning perspective ? What is the State Space, Action Space and Reward Function ?
 * How viable is Reinforcement Learning in solving the PSP problem ?
 
-##  Installation
+##  III. Installation
 
 In order to install and run this module, complete the following steps. 
 
@@ -47,11 +47,11 @@ Which creates the folder envs first, then the environment pfpenv and activates i
 >> pip install .
 ```
 
-## Usage
+## IV. Usage
 
 <img src="./docs/animated.svg" width="80%" height="60%">
 
-## Components
+## V. Components
 
 This section describes the different components of the module :
 
@@ -68,6 +68,10 @@ The Environment is based on a simple protein abstraction that makes computations
 With this in mind, we can define our RL environment to solve our problem, cast as combinatorial optimization task. Given a protein sequence `P` of length `n`, the State Space would be the set of configurations of amino-acids in the lattice, and the Action Space would represent the possible positions to place the next amino-acid on the grid. Finally, we design the reward function to reward valid placements of amino-acids (i.e that do not result in a collision), and if we successfully terminate the episode, we reward the agent by the negative energy of the resulting configuration. An episode starts by placing the first (actually first two) amino-acid in the grid, and terminates either when we hit a collision or when we place all of the amino-acids. Refer to the [paper](./report/Protein%20Folding%20Problem%20-%20A%20Reinforcement%20Learning%20Approach.pdf) to know more.
 
 The file `pfp/env.py` implements this environment by extending the base environment class offered by the package `gym` from OpenAI. The figure below shows an example of a successful configuration of the protein sequence `PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP` obtained by rendering the state of the environment after running a trained RL agent on it. On top of the image, we also display a summary of the environment.
+
+<p align="center">
+  <img width="40%" height="40%" src="./report/figures/predicted_native_state.png">
+</p>
 
 <div style="text-align:center"><img src="./report/figures/predicted_native_state.png" width="40%" height="40%"></div>
 <div style="text-align:center"><img src="./report/figures/env_summary.png" width="80%" height="30%"></div>
@@ -86,7 +90,7 @@ All implementations are developed from scratch using `Tensorflow` and `Keras`for
 
 To evaluate the performance of our proposed method, we need labeled data: protein sequences with their corresponding optimal level of energy. The data folder includes a csv file containing such data, retrieved from http://www.bioinf.uni-freiburg.de. 
 
-## References
+## VI. References
 
 [1] Lau, Kit Fun and Ken A Dill (1989). “A lattice statistical mechanics model of the conformational and sequence spaces of proteins”. In: Macromolecules 22.10, pp. 3986–3997.
 
