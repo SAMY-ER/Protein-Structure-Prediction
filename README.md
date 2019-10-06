@@ -6,7 +6,7 @@ The following is an AI project that aims to solve a simplified version of the Pr
 
 Knowing the outcome of the folding process in advance is one of the major challenges in Bioinformatics, and solving it would have important implications in several domains ranging form biochemistry to genetic engineering.
 
-For a more detailed description of the problem, the task formulation and the proposed solution, check out the project's [paper](https://github.com/SAMY-ER/Protein-Folding-Problem/blob/master/report/Protein%20Folding%20Problem%20-%20A%20Reinforcement%20Learning%20Approach.pdf) !
+For a more detailed description of the problem, the task formulation and the proposed solution, check out the project's [paper](./report/Protein%20Structure%20Prediction%20-%20A%20Reinforcement%20Learning%20Approach.pdf) !
 
 ## II. Research Questions
 
