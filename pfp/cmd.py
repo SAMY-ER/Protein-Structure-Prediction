@@ -60,6 +60,34 @@ def train_agent(agent, model_file, sequence=SEQUENCE_2, episodes=50000):
             losses.append(history['loss'][0])
         print('TRAINING FINISHED!')
 
+    elif agent == 'ddqn':
+        # CREATE AGENT
+        agent = DDQNAgent(state_size, nb_actions, learning_rate=0.001, epsilon_decay=np.exp(np.log(0.05)/episodes))
+        # TRAIN AGENT
+        rewards = []
+        losses = []
+        print('TRAINING STARTED ...')
+        for episode in range(1, episodes+1):
+            state = env.reset(state_nn=True)
+            done = False
+            while not done:
+                # Pick Next Action (via e-greedy policy)
+                action = agent.act(state, policy='egreedy') 
+                # Advance to next step
+                next_state, reward, done, info = env.step(action, state_nn=True) 
+                 # Remember Experience
+                agent.remember(state, action, next_state, reward, done)
+                state = next_state
+            # Update agent
+            history = agent.train()
+            if episode % 500 == 0 : 
+                print('   Episode: {}/{} - Loss: {:.3f} - Reward: {:.2f} - Epsilon: {:.2f}.'.format(episode, episodes, history['loss'][0], env.reward, agent.epsilon))        
+            if agent.epsilon >= agent.epsilon_min : agent.epsilon *= agent.epsilon_decay
+            if episode % agent.target_update == 0: agent.update_target_network()
+            rewards.append(env.reward)
+            losses.append(history['loss'][0])
+        print('TRAINING FINISHED!')
+
     else:
         # CREATE AGENT
         agent = QAgent(state_size, nb_actions, alpha=0.8, epsilon_decay=np.exp(np.log(0.05)/episodes))
@@ -68,11 +96,11 @@ def train_agent(agent, model_file, sequence=SEQUENCE_2, episodes=50000):
         print('TRAINING STARTED ...')
         for episode in range(1, episodes+1):
             if episode % 10000 == 0 : print("  Episode :", episode)
-            state = env.reset(state_nn=state_nn)
+            state = env.reset()
             done = False
             while not done:
                 # Pick Next Action (via e-greedy policy)
-                action = agent.act(state, policy='egreedy', state_nn=state_nn) 
+                action = agent.act(state, policy='egreedy') 
                 # Advance to next step
                 next_state, reward, done, info = env.step(action) 
                 # Update agent

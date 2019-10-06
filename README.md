@@ -18,6 +18,8 @@ Through this project, we will try to answer the following questions :
 
 ##  Installation
 
+[![asciicast](https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/pfp_setup.cast)](https://github.com/SAMY-ER/Protein-Folding-Problem/tree/master/docs/pfp_setup.cast)
+
 
 ## Components
 
