@@ -1,8 +1,7 @@
 __pycache__
 .ipynb_checkpoints
 .DS_Store
-agent.pickle
-report/Protein Folding Problem - A Reinforcement Learning Approach.pages
+report/Protein Structure Prediction - A Reinforcement Learning Approach.pages
 report/.DS_Store
-pfp.egg-info/
+psp.egg-info/
 

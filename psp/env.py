@@ -1,5 +1,5 @@
 # ============================================================================================================================ #
-#                                PROTEIN FOLDING PROBLEM : REINFORCEMENT LEARNING ENVIRONMENT                                  #
+#                             PROTEIN STRUCTURE PREDICTION : REINFORCEMENT LEARNING ENVIRONMENT                                #
 # ============================================================================================================================ #
 
 
@@ -23,7 +23,7 @@ import textwrap
 # CLASS DEFINITION : ENVIRONMENT #
 # ============================== #
 
-class ProteinFoldingEnv(gym.Env):
+class ProteinStructureEnv(gym.Env):
     def __init__(self, sequence, valid_state_reward = 0.1, collision_reward=0, fig_size=(6, 6)):
         """Initialize new Environement."""
         # Environment Variables

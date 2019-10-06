@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
-    name='pfp', 
-    packages=['pfp'],
-    version='0.0.1.dev1',
+    name='psp', 
+    packages=['psp'],
+    version='0.0.1.dev',
     entry_points={
-        'console_scripts': ['pfp-cli=pfp.cmd:main']
+        'console_scripts': ['psp-cli=psp.cmd:main']
     }
 )

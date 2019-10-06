@@ -1,24 +1,24 @@
 """
-PFP - Protein-Folding-Problem
+PSP - Protein-Structure-Prediction
 
 Usage:
-    pfp-cli train <agent> <model-file> [--seq=<sequence> --episodes=<episodes>]
-    pfp-cli run <model-file> [--seq=<sequence>]
-    pfp-cli (-h | --help)
+    psp-cli train <agent> <model-file> [--seq=<sequence> --episodes=<episodes>]
+    psp-cli run <model-file> [--seq=<sequence>]
+    psp-cli (-h | --help)
 
 Arguments:
     <agent>          Type of agent to train.
     <model-file>     Saved model file.
 
 Options:
-    --seq=<sequence>           Protein sequence to train on. [default: seq.SEQUENCE_2]
+    --seq=<sequence>           Protein sequence to train on. [default: SEQUENCE_2]
     --episodes=<episodes>      Number of episodes to train for. [default: 50000]
     -h --help                  Show this screen.
 """
 
 from docopt import docopt
 import numpy as np
-from pfp import ProteinFoldingEnv, QAgent, DQNAgent, SEQUENCE_1, SEQUENCE_2, SEQUENCE_3, SEQUENCE_4, SEQUENCE_5, SEQUENCE_6
+from psp import ProteinStructureEnv, QAgent, DQNAgent, SEQUENCE_1, SEQUENCE_2, SEQUENCE_3, SEQUENCE_4, SEQUENCE_5, SEQUENCE_6
 
 
 # ================================= #
@@ -27,7 +27,7 @@ from pfp import ProteinFoldingEnv, QAgent, DQNAgent, SEQUENCE_1, SEQUENCE_2, SEQ
 
 def train_agent(agent, model_file, sequence=SEQUENCE_2, episodes=50000):
     # CREATE ENVIRONMENT
-    env = ProteinFoldingEnv(sequence, valid_state_reward = 0.1, collision_reward = 0) 
+    env = ProteinStructureEnv(sequence, valid_state_reward = 0.1, collision_reward = 0) 
 
    # GET STATE AND ACTION SPACE SIZE
     state_size = env.size - 2
@@ -125,7 +125,7 @@ def train_agent(agent, model_file, sequence=SEQUENCE_2, episodes=50000):
 
 def run_agent(model_file, sequence=SEQUENCE_2):
     # CREATE ENVIRONMENT
-    env = ProteinFoldingEnv(sequence, valid_state_reward = 0.1, collision_reward = -1)
+    env = ProteinStructureEnv(sequence, valid_state_reward = 0.1, collision_reward = -1)
 
     # LOAD AGENT
     agent = QAgent.load(model_file)
