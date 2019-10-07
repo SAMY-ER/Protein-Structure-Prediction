@@ -11,7 +11,7 @@ Arguments:
     <model-file>     Saved model file.
 
 Options:
-    --seq=<sequence>           Protein sequence to train on. [default: SEQUENCE_2]
+    --seq=<sequence>           Protein sequence to train on. [default: HHPPHH]
     --episodes=<episodes>      Number of episodes to train for. [default: 50000]
     -h --help                  Show this screen.
 """
