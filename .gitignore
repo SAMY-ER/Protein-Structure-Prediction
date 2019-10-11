@@ -4,4 +4,5 @@ __pycache__
 report/Protein Structure Prediction - A Reinforcement Learning Approach.pages
 report/.DS_Store
 psp.egg-info/
+dev/
 

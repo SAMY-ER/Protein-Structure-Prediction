@@ -13,7 +13,7 @@ import numpy as np
 from collections import OrderedDict
 import pickle
 import tensorflow as tf
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.optimizers import Adam, RMSprop
 from tensorflow.keras.losses import Huber
@@ -78,6 +78,7 @@ class QAgent:
     def load(fname):
         """Method to load a Q-Learning agent."""
         with open(fname, 'rb') as f:
+            print(fname)
             agent = pickle.load(f)           
         return agent
 
@@ -140,17 +141,16 @@ class DQNAgent:
         history = self.policy_network.fit(input_batch, target_batch, batch_size=self.batch_size, epochs=1, verbose=0)
         return history.history
 
-    def save(self, fname='../models/model.pkl'):
-        """Method to save a DQN agent."""
-        with open(fname, 'wb') as output:
-            pickle.dump(self, output, pickle.HIGHEST_PROTOCOL)
+    def save(self, fname='../models/model.h5'):
+        """Method to save the Policy Network of a DQN agent."""
+        self.policy_network.save(fname)
         return None
-
+    
     @staticmethod
     def load(fname):
-        """Method to load a DQN agent."""
-        with open(fname, 'rb') as f:
-            agent = pickle.load(f)           
+        """Method to load a Policy Network in a new DQN agent."""
+        agent = DQNAgent(14, 3)
+        agent.policy_network = load_model(fname)
         return agent
 
 
@@ -218,3 +218,15 @@ class DDQNAgent:
         target_batch[ix, batch.action] = np.array(batch.reward) + (1 - np.array(batch.done)) * self.gamma * np.max(next_Q, axis=1)       
         history = self.policy_network.fit(input_batch, target_batch, batch_size=self.batch_size, epochs=1, verbose=0)
         return history.history
+
+    def save(self, fname='../models/model.h5'):
+        """Method to save the Policy Network of a DDQN agent."""
+        self.policy_network.save(fname)
+        return None
+    
+    @staticmethod
+    def load(fname):
+        """Method to load a Policy Network in a new DDQN agent."""
+        agent = DDQNAgent(14, 3)
+        agent.policy_network = load_model(fname)
+        return agent
