@@ -23,7 +23,7 @@ import textwrap
 # CLASS DEFINITION : ENVIRONMENT #
 # ============================== #
 
-class ProteinStructureEnv(gym.Env):
+class ProteinStructureEnv:
     def __init__(self, sequence, valid_state_reward = 0.1, collision_reward=0, fig_size=(6, 6)):
         """Initialize new Environement."""
         # Environment Variables
@@ -34,14 +34,12 @@ class ProteinStructureEnv(gym.Env):
         self.collision_reward = collision_reward
         self.ACTION_TO_STR = {0 : 'Left', 1 : 'Forward', 2 : 'Right'}
 
-        # Agent Variables
         self.state = [(0,0), (0,1)] # Initial state is [(0,0), (0,1)] in order to force an initial direction and reduce state space by factor 1/3
-        self.state_nn = np.zeros(self.size - 2) - 1 # Initial state_nn is [-1, -1, ..., -1] 
+        self.state_nn = np.zeros(self.size - 2) - 1 # Initial state_nn is [-1, -1, ..., -1] (This is another representation of the state based on the actions, used for neural nets)
         self.actions = [] # List of ordered actions taken during an episode
         self.is_collision = False # Checks presence of collision
         self.reward = 0 # Counts reward during an episode
         
-        # Action Space & Observation Space
         self.action_space = gym.spaces.Discrete(3) # Action space of size 3
         self.loc = (0,1) # Last Position on the chain. Initial value is (0,1) (from initial state [(0,0), (0,1)])
         self.direction = 1 # Initial direction is 'Forward'
