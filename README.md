@@ -25,20 +25,20 @@ In order to install and run this module, complete the following steps.
 + **Using virtualenv**
 ```
 >> mkdir ~/envs
->> python -m venv ~/envs/pfpenv
->> source ~/envs/pfpenv/bin/activate
+>> python -m venv ~/envs/pspenv
+>> source ~/envs/pspenv/bin/activate
 ``` 
-Which creates the folder envs first, then the environment pfpenv and activates it.
+Which creates the folder envs first, then the environment pspenv and activates it.
 
 + **Using conda envs**
 ```
->> conda create --name pfpenv
->> conda activate pfpenv
+>> conda create --name pspenv
+>> conda activate pspenv
 ```
 
 2. Install requirements:
 ```
->> cd path/to/Protein-Folding-Problem
+>> cd path/to/Protein-Structure-Prediction
 >> pip install -r requirements.txt
 ```
 
@@ -67,7 +67,7 @@ The Environment is based on a simple protein abstraction that makes computations
 
 With this in mind, we can define our RL environment to solve our problem, cast as combinatorial optimization task. Given a protein sequence `P` of length `n`, the State Space would be the set of configurations of amino-acids in the lattice, and the Action Space would represent the possible positions to place the next amino-acid on the grid. Finally, we design the reward function to reward valid placements of amino-acids (i.e that do not result in a collision), and if we successfully terminate the episode, we reward the agent by the negative energy of the resulting configuration. An episode starts by placing the first (actually first two) amino-acid in the grid, and terminates either when we hit a collision or when we place all of the amino-acids. Refer to the [paper](./report/Protein%20Structure%20Prediction%20-%20A%20Reinforcement%20Learning%20Approach.pdf) to know more.
 
-The file `pfp/env.py` implements this environment by extending the base environment class offered by the package `gym` from OpenAI. The figure below shows an example of a successful configuration of the protein sequence `PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP` obtained by rendering the state of the environment after running a trained RL agent on it. On top of the image, we also display a summary of the environment.
+The file `psp/env.py` implements this environment by extending the base environment class offered by the package `gym` from OpenAI. The figure below shows an example of a successful configuration of the protein sequence `PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP` obtained by rendering the state of the environment after running a trained RL agent on it. On top of the image, we also display a summary of the environment.
 
 <p align="center">
   <img width="40%" height="40%" src="./report/figures/predicted_native_state.png">
@@ -77,7 +77,7 @@ The file `pfp/env.py` implements this environment by extending the base environm
 
 ### 2. Agents
 
-We implement several RL agents to attempt to solve this Protein Folding Problem. For now, these include:
+We implement several RL agents to attempt to solve this Protein Folding problem. For now, these include:
 
 1. Q-Learning
 2. Deep Q-Network (DQN) [2]
